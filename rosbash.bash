@@ -83,8 +83,8 @@ alias rti='rostopic info'
 # Generates debian package from ROS package name
 todeb() {
     # Get OS name and codename
-    OS_VERSION="$(lsb_release -c | cut -f2)"
-    OS_NAME="$(lsb_release -i | cut -f2 | tr "[:upper:]" "[:lower:]")"
+    OS_VERSION=ubuntu:xenial
+    OS_NAME=ubuntu
     # Remember current dir
     local ORIG_DIR="$(pwd)"
     # Create deb dir if necessary and store path
@@ -120,8 +120,8 @@ inject-rosdeps() {
     # Remove any old injections
     withdraw-rosdeps
     # Get OS name and codename
-    OS_VERSION="$(lsb_release -c | cut -f2)"
-    OS_NAME="$(lsb_release -i | cut -f2 | tr "[:upper:]" "[:lower:]")"
+    OS_VERSION=ubuntu:xenial
+    OS_NAME=ubuntu
     # Get packages
     roscd
     cd ..
