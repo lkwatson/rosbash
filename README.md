@@ -13,7 +13,7 @@ cd rosbash
 # Add an empty line, add the source command
 echo >> ~/.bashrc && echo source `pwd`/rosbash.bash >> ~/.bashrc
 source ~/.bashrc
-install_todeb
+install-rosbash
 ```
 
 Restart your shell for the changes to take effect.
@@ -27,6 +27,8 @@ groovy
 indigo
 hydro
 kinetic
+lunar
+melodic
 ```
 
 The following commands start a new shell with a workspace environment (either devel or install) for instance:
@@ -58,6 +60,7 @@ The next commands allow you to manipulate the environment variables:
 rosmaster my_robot.local     # Set ROS_MASTER_URI to http://my_robot.local:11311
 roshostname titan.local     # Set ROS_HOSTNAME to titan.local and remove ROS_IP
 rosip 192.168.0.1     # Set ROS_IP to 192.168.0.1 and remove ROS_HOSTNAME
+rosmaster           # Reset to localhost, remove ROS_IP/ROS_HOSTNAME and ROS_MASTER to http://localhost:11311
 ```
 
 ### Generating Debian Packages
@@ -73,16 +76,26 @@ todeb ROS_PACKAGE_NAME
 all-todeb
 
 ## to install all publicly available dependencies for the packages in your workspace
-install-repo-deps
+install_deps
+```
+
+Rosdep keys for private ROS package dependencies are generated automatically when using `todeb` or `all-todeb`, however the packages must be in the workspace for their keys to be generated.
+
+Keys for other private ROS package dependencies must user-defined, in the file `src/rosdep_keys.yaml` inside the ROS workspace. See the key example below:
+```yaml
+yaml_cpp_0_6:
+  ubuntu:
+    xenial: [ros-kinetic-yaml-cpp-0-6]
 ```
 
 ### Other useful commands
 
 ```bash
-cm     # Finds the root folder of your workspace, run catkin_make and comes back to current folder
+cm # Finds the root folder of your workspace, run catkin_make and comes back to current folder
 rosrefresh    # Rebuilds the index of packages in your workspace (useful if your packages are not seen)
-urdf_display my_robot.urdf     # Display the URDF model in the GUI
-xacro_display my_robot.xacro     # Generates the URDF from XACRO and display it in GUI
+urdf_display my_robot.urdf # Display the URDF model in the GUI
+xacro_display my_robot.xacro # Generates the URDF from XACRO and display it in GUI
+toggle-hostname # displays/hides local hostname in the prompt 
 rn # rosnode list
 rni # rosnode info
 rte # rostopic echo
